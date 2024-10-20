@@ -1,0 +1,13 @@
+
+@page "/character/{id:int}"
+@using RickAndMortyApi.Dtos
+@using RickAndMortyApi.Components
+
+@inject HttpClient httpClient
+
+<ItemCard id=@id />
+
+@code {
+    [Parameter]
+    public int id {set; get;}
+}

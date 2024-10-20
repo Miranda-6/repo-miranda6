@@ -1,0 +1,77 @@
+@namespace RickAndMortyApi.Components
+@using RickAndMortyApi.Dtos
+@using Microsoft.JSInterop
+@inject HttpClient httpClient
+
+
+@if (isLoading)
+{
+    <p>Cargando...</p>
+}
+else if (location != null)
+{
+
+    <div class="contenedor-general">    
+
+        <div class="card" style="margin-left: 20px;">
+            <div class="card-body info-card">
+                <h1 class="card-title text-center">@location.name</h1>
+                <h3>Id: @location.id</h3>
+                <h3>Type: @location.type</h3>
+                <h3>Dimension: @location.dimension</h3>
+                <h3>Residents:</h3>
+                 @if (location.residents != null && location.residents.Count > 0)
+                {
+                    <ul>
+                        @foreach (var residentUrl in location.residents)
+                        {
+                            //extraigo id de la URL
+                            var residentId = residentUrl.Split('/').Last();
+                            
+                            //enlazo con mi endpoint /character/{id}
+                            <li>
+                                <a href="/character/@residentId">Character @residentId</a>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>No residents found for this location</p>
+                }
+                    
+            </div>
+            
+        </div>
+  
+    </div>
+    
+}
+else
+{
+    <p>Error al cargar la ubicación. Inténtalo de nuevo más tarde.</p>
+}
+   
+
+@code
+{
+    [Parameter]
+    public int id { get; set; }
+    private LocationDto location {get; set;}
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try {
+            location = await httpClient.GetFromJsonAsync<LocationDto>($"location/{id}");
+        } catch (Exception ex) {
+            Console.WriteLine($"Error al cargar la ubicación: {ex.Message}");
+            location = null; //nulo para que no arroje errores parte inferior
+        }
+        finally
+        {
+            isLoading = false; //cambiar el estado de carga
+        }
+    }
+
+}

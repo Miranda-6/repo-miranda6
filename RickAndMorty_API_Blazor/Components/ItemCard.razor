@@ -1,0 +1,114 @@
+@namespace RickAndMortyApi.Components
+@using RickAndMortyApi.Dtos
+@using Microsoft.JSInterop
+@inject HttpClient httpClient
+@inject IJSRuntime JSRuntime // Inyectar el servicio IJSRuntime
+
+@if (isLoading)
+{
+    <p>Cargando...</p>
+}
+else if (character != null)
+{
+    var locationId = @character.location?.url.Split('/').Last();
+
+    <div class="contenedor-general">    
+        <div class="card" style="">
+            
+            <img src="@character.image" class="card-img-top" alt="img-character">
+            <div class="card-body">
+                <h5 class="card-title text-center">@character.name</h5>
+                
+                <button id="click-me-bttn" type="button" @onclick="GettingRandomQuotes">Click Me</button>
+                <button class="dont-click-bttn" type="button" @onclick="DestroyPlanet">Don't Click Me</button>
+            </div>
+            
+        </div>
+
+        <div class="card" style="margin-left: 20px;">
+            <div class="card-body info-card">
+                <p class="quote">@currentPhrase</p>
+                <h3 data-label="Status:"> @character.status</h3>
+                <h3 data-label="Specie:"> @character.species</h3>
+                <h3 data-label="Gender:"> @character.gender</h3>
+                <h3 data-label="Type:"> @character.type</h3>
+                <h3 data-label="Created:"> @(
+                    DateTime.Parse(character.created).ToString("dd MMMM 'of' yyyy, HH:mm"))</h3>
+                <h3 data-label="Origin:"> @character.origin?.name</h3>
+                <h3 data-label="Location:">
+                    <a href="/location/@locationId">@character.location?.name</a>
+                </h3>
+            
+               
+            </div>
+            
+        </div>
+
+        
+
+       
+    </div>
+    
+}
+else
+{
+    <p>Error al cargar el personaje. Inténtalo de nuevo más tarde.</p>
+}
+
+    
+
+@code
+{
+    [Parameter]
+    public int id { get; set; }
+    private CharacterDto character { get; set; }
+    private string currentPhrase;
+
+    private bool isLoading = true;
+
+    //Frases aleatorias de Rick and Morty
+    private List<string> quotes = new List<string>
+    {    
+        "I'm not arguing, I'm just explaining why I'm right.",
+        "Wubba Lubba Dub-Dub!",
+        "Existence is pain!",
+        "Get Schwifty!",
+        "What, you want to go on some kind of adventure?",
+        "Don't even trip, dawg!",
+        "That just sounds like slavery with extra steps!",
+        "Rikki-Tikki-Tavi, b****!",
+        "I turned myself into a pickle, Morty!",
+        "I'm sorry, but your opinion means very little to me.",
+        "I just killed my family! I don't care who they were!",
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        try {
+            character = await httpClient.GetFromJsonAsync<CharacterDto>($"character/{id}");
+            currentPhrase = "What you looking at -_-";
+        } catch (Exception ex) {
+            Console.WriteLine($"Error al cargar el personaje: {ex.Message}");
+            character = null; //nulo para que no arroje errores parte inferior
+        }
+        finally
+        {
+            isLoading = false; //cambiar el estado de carga
+        }
+    }
+
+    //acción en "Click Me"
+    private void GettingRandomQuotes()
+    {
+        var random = new Random();
+        int randomIndex = random.Next(quotes.Count);
+        currentPhrase = quotes[randomIndex];
+    }
+    
+    //acción en "Don't Click Me"
+    private async Task DestroyPlanet()
+    {
+        var locationName = @character.location?.name;
+        await JSRuntime.InvokeVoidAsync("alert", $"{locationName} has been destroyed, Wubba Lubba Dub Dub!!");
+    }
+}

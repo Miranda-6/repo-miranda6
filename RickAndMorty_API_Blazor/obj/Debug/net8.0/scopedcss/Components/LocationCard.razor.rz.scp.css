@@ -1,0 +1,38 @@
+/* Estilo general del contenedor */
+.contenedor-general[b-j08z2obj1o] {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 70%;
+    margin: auto;
+    
+}
+
+    .info-card[b-j08z2obj1o]{
+        padding-left: 54px;
+        width: 40rem;
+    }
+
+
+/* Estilo de los encabezados */
+h2[b-j08z2obj1o] {
+    font-size: 24px;
+    margin: 10px 0;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+h3[b-j08z2obj1o] {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+h3[b-j08z2obj1o]::before {
+    content: attr(data-label);
+    font-weight: bold;
+}
