@@ -1,0 +1,28 @@
+Class 3:
+
+1. Enunciado: Escribe un programa que calcule el área de un rectángulo a partir de su base y altura.
+2. Enunciado: Crea un programa que convierta una temperatura en grados Celsius a Fahrenheit.  
+Fórmula: F = (C × 9/5) + 32
+3. Enunciado: Dado un número, imprime si es par o impar utilizando el operador %
+4. Enunciado: Un trabajador recibe un aumento del *10%* en su salario. Calcula su nuevo salario usando +=
+5. Enunciado: Aplica un 20% de descuento  a un precio usando -=
+6. Determinar si una persona es mayor de edad
+ Enunciado: Escribe un programa que pida la edad de una persona y determine si es mayor o menor de edad (18 años).
+
+7. Verificar si un número es positivo, negativo o cero
+ Enunciado: Escribe un programa que lea un número y determine si es positivo, negativo o cero
+
+8. Determinar si un año es bisiesto
+ Enunciado: Un año es bisiesto si es divisible por 4, pero no por 100, salvo que también sea divisible por 400.
+
+9. Calcular descuento según la cantidad de productos comprados
+Enunciado: Si compras más de 10 productos, obtienes 20% de descuento, si compras entre 5 y 10, obtienes 10%.
+
+Menú de opciones básicas
+Enunciado: Crea un menú con las opciones 1. Saludar, 2. Despedirse, 3. Salir.
+
+Pedir una clave hasta que sea correcta
+Enunciado: Pide una clave y sigue pidiendo hasta que el usuario escriba "1234".
+
+Verificar si un número es mayor, menor o igual a otro
+ Enunciado: Pide dos números y di cuál es mayor, menor o si son iguales.
